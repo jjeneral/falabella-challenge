@@ -11,6 +11,7 @@ public class Product {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(unique = true)
     private String sku;
     private String name;
     private String brand;
