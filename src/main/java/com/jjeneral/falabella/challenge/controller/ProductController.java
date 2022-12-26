@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/products")
@@ -22,6 +23,17 @@ public class ProductController {
     public ProductDto createProduct(@Valid @RequestBody ProductDto productDto) {
         return service.create(productDto);
 
+    }
+    @GetMapping()
+    @ResponseStatus( HttpStatus.OK)
+    public List<ProductDto> getAll() {
+        return service.getAll();
+    }
+
+    @GetMapping("/{sku}")
+    @ResponseStatus( HttpStatus.OK)
+    public ProductDto getBySku(@PathVariable String sku) {
+        return service.findBySku(sku);
     }
 
 }
