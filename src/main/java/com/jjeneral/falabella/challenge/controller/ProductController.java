@@ -26,14 +26,26 @@ public class ProductController {
     }
     @GetMapping()
     @ResponseStatus( HttpStatus.OK)
-    public List<ProductDto> getAll() {
+    public List<ProductDto> getAllProducts() {
         return service.getAll();
     }
 
     @GetMapping("/{sku}")
     @ResponseStatus( HttpStatus.OK)
-    public ProductDto getBySku(@PathVariable String sku) {
+    public ProductDto getProductBySku(@PathVariable String sku) {
         return service.findBySku(sku);
+    }
+
+    @PutMapping("/{sku}")
+    @ResponseStatus( HttpStatus.OK)
+    public void updateProduct(@PathVariable String sku, @Valid @RequestBody ProductDto productDto) {
+        service.update(sku, productDto);
+    }
+
+    @DeleteMapping("/{sku}")
+    @ResponseStatus( HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable String sku) {
+        service.delete(sku);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.jjeneral.falabella.challenge.controller;
 
+import com.jjeneral.falabella.challenge.exception.DuplicatedProductException;
 import com.jjeneral.falabella.challenge.exception.ProductNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,14 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, List<String>> handleProductNotFound(ProductNotFoundException ex) {
         log.error("Not found error", ex);
+        List<String> errors = Collections.singletonList(ex.getMessage());
+        return getErrorResponse(errors);
+    }
+
+    @ExceptionHandler(DuplicatedProductException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, List<String>> handleDuplicatedProduct(DuplicatedProductException ex) {
+        log.error("Duplicated product error", ex);
         List<String> errors = Collections.singletonList(ex.getMessage());
         return getErrorResponse(errors);
     }
