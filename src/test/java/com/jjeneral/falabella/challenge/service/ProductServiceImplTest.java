@@ -4,20 +4,23 @@ import com.jjeneral.falabella.challenge.fixture.ProductFixture;
 import com.jjeneral.falabella.challenge.model.dto.ProductDto;
 import com.jjeneral.falabella.challenge.model.entity.Product;
 import com.jjeneral.falabella.challenge.repository.ProductRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.convert.ConversionService;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-class ProductServiceImplTest {
+
+@ExtendWith(MockitoExtension.class)
+public class ProductServiceImplTest {
 
     @InjectMocks
     ProductServiceImpl productService;
@@ -29,32 +32,34 @@ class ProductServiceImplTest {
     ConversionService conversionService;
 
     @Test
-    void create_productDto_createdProductDto() {
+    public void create_productDto_createdProductDto() {
         when(repository.findFirstBySku(anyString())).thenReturn(null);
-        when(conversionService.convert(any(ProductDto.class), Product.class))
-                .thenReturn(ProductFixture.getProduct());
+        doReturn(ProductFixture.getProduct())
+                .when(conversionService).convert(any(ProductDto.class), eq(Product.class));
         when(repository.save(any(Product.class))).thenReturn(ProductFixture.getProduct());
+        doReturn(ProductFixture.getProductDto())
+                .when(conversionService).convert(any(Product.class), eq(ProductDto.class));
 
         ProductDto actual = productService.create(ProductFixture.getProductDto());
         ProductDto expected = ProductFixture.getProductDto();
 
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
 
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
     }
 
     @Test
-    void findBySku() {
+    public void findBySku() {
     }
 
     @Test
-    void update() {
+    public void update() {
     }
 
     @Test
-    void delete() {
+    public void delete() {
     }
 }
