@@ -14,6 +14,7 @@ import org.springframework.core.convert.ConversionService;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -59,11 +60,21 @@ public class ProductServiceImplTest {
         List<ProductDto> expected = ProductFixture.getProductDtoList();
         List<ProductDto> actual   = productService.getAll();
 
+        assertNotNull(actual);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void findBySku() {
+    public void findBySku_void_productDto() {
+        when(repository.findFirstBySku(anyString()))
+                .thenReturn(ProductFixture.getProduct());
+        doReturn(ProductFixture.getProductDto())
+                .when(conversionService).convert(any(Product.class), eq(ProductDto.class));
+
+        ProductDto expected = ProductFixture.getProductDto();
+        ProductDto actual   = productService.findBySku(ProductFixture.SKU_TEST);
+
+        assertEquals(expected, actual);
     }
 
     @Test
