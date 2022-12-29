@@ -46,9 +46,7 @@ public class ProductServiceImplTest {
         ProductDto expected = ProductFixture.getProductDto();
         ProductDto actual   = productService.create(ProductFixture.getProductDto());
 
-
         assertEquals(expected, actual);
-
     }
 
     @Test
