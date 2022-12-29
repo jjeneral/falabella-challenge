@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.convert.ConversionService;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -40,15 +42,24 @@ public class ProductServiceImplTest {
         doReturn(ProductFixture.getProductDto())
                 .when(conversionService).convert(any(Product.class), eq(ProductDto.class));
 
-        ProductDto actual = productService.create(ProductFixture.getProductDto());
         ProductDto expected = ProductFixture.getProductDto();
+        ProductDto actual   = productService.create(ProductFixture.getProductDto());
+
 
         assertEquals(expected, actual);
 
     }
 
     @Test
-    public void getAll() {
+    public void getAll_void_listOfProductDto() {
+        when(repository.findAll()).thenReturn(ProductFixture.getProductList());
+        doReturn(ProductFixture.getProductDto())
+                .when(conversionService).convert(any(Product.class), eq(ProductDto.class));
+
+        List<ProductDto> expected = ProductFixture.getProductDtoList();
+        List<ProductDto> actual   = productService.getAll();
+
+        assertEquals(expected, actual);
     }
 
     @Test

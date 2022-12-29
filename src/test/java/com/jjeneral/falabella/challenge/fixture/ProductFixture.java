@@ -5,6 +5,8 @@ import com.jjeneral.falabella.challenge.model.entity.Product;
 import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductFixture {
 
@@ -22,6 +24,12 @@ public class ProductFixture {
         return productDto;
     }
 
+    public static List<ProductDto> getProductDtoList() {
+        List<ProductDto> productDtos = new ArrayList<>();
+        productDtos.add(getProductDto());
+
+        return productDtos;
+    }
     public static Product getProduct() {
         Product product = new Product();
         product.setId(1L);
@@ -30,5 +38,10 @@ public class ProductFixture {
         return product;
     }
 
+    public static List<Product> getProductList() {
+        List<Product> products = new ArrayList<>();
+        products.add(getProduct());
 
+        return products;
+    }
 }
