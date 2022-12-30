@@ -1,11 +1,11 @@
 package com.jjeneral.falabella.challenge.service;
 
 import com.jjeneral.falabella.challenge.exception.DuplicatedProductException;
+import com.jjeneral.falabella.challenge.exception.ProductNotFoundException;
 import com.jjeneral.falabella.challenge.fixture.ProductFixture;
 import com.jjeneral.falabella.challenge.model.dto.ProductDto;
 import com.jjeneral.falabella.challenge.model.entity.Product;
 import com.jjeneral.falabella.challenge.repository.ProductRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -55,7 +56,7 @@ public class ProductServiceImplTest {
     @Test()
     public void create_productDto_duplicatedProductException() {
 
-        DuplicatedProductException thrown = Assertions.assertThrows(DuplicatedProductException.class, () -> {
+        DuplicatedProductException thrown = assertThrows(DuplicatedProductException.class, () -> {
             when(repository.findFirstBySku(anyString()))
                     .thenReturn(ProductFixture.getProduct());
             productService.create(ProductFixture.getProductDto());
@@ -78,7 +79,7 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void findBySku_void_productDto() {
+    public void findBySku_string_productDto() {
         when(repository.findFirstBySku(anyString()))
                 .thenReturn(ProductFixture.getProduct());
         doReturn(ProductFixture.getProductDto())
@@ -88,6 +89,18 @@ public class ProductServiceImplTest {
         ProductDto actual   = productService.findBySku(ProductFixture.SKU_TEST);
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void findBySku_string_productNotFoundException() {
+        ProductNotFoundException thrown = assertThrows(ProductNotFoundException.class, () -> {
+            when(repository.findFirstBySku(anyString()))
+                    .thenReturn(null);
+            productService.findBySku(ProductFixture.SKU_NOT_FOUND_TEST);
+        });
+
+        assertTrue(thrown.getMessage().startsWith("No product found"));
+        assertTrue(thrown.getMessage().contains(ProductFixture.SKU_NOT_FOUND_TEST));
     }
 
     @Test

@@ -11,6 +11,8 @@ import java.util.List;
 public class ProductFixture {
 
     public static String SKU_TEST = "FAL-8406270";
+    public static String SKU_NOT_FOUND_TEST = "FAL-1000000";
+
 
     public static ProductDto getProductDto() {
         ProductDto productDto = new ProductDto();
