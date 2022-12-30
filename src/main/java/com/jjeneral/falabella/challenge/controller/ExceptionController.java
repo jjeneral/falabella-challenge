@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -44,11 +45,13 @@ public class ExceptionController {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return getErrorResponse(errors);
     }
-    @ExceptionHandler({Exception.class, RuntimeException.class})
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public final Map<String, List<String>> handleOtherExceptions(Exception ex) {
-        log.error("General Error", ex);
-        List<String> errors = Collections.singletonList(ex.getMessage());
+        String idLog = UUID.randomUUID().toString();
+        log.error("General Error with ID: " + idLog, ex);
+        List<String> errors = Collections.singletonList(
+                String.format("Error id %s. Please contact administrator", idLog));
         return getErrorResponse(errors);
     }
 
