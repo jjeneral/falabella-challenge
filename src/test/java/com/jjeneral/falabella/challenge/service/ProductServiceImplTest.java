@@ -1,9 +1,11 @@
 package com.jjeneral.falabella.challenge.service;
 
+import com.jjeneral.falabella.challenge.exception.DuplicatedProductException;
 import com.jjeneral.falabella.challenge.fixture.ProductFixture;
 import com.jjeneral.falabella.challenge.model.dto.ProductDto;
 import com.jjeneral.falabella.challenge.model.entity.Product;
 import com.jjeneral.falabella.challenge.repository.ProductRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -47,6 +50,18 @@ public class ProductServiceImplTest {
         ProductDto actual   = productService.create(ProductFixture.getProductDto());
 
         assertEquals(expected, actual);
+    }
+
+    @Test()
+    public void create_productDto_duplicatedProductException() {
+
+        DuplicatedProductException thrown = Assertions.assertThrows(DuplicatedProductException.class, () -> {
+            when(repository.findFirstBySku(anyString()))
+                    .thenReturn(ProductFixture.getProduct());
+            productService.create(ProductFixture.getProductDto());
+        });
+
+        assertTrue(thrown.getMessage().contains(ProductFixture.SKU_TEST));
     }
 
     @Test
