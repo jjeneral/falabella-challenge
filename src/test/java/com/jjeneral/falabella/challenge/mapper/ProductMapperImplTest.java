@@ -5,8 +5,6 @@ import com.jjeneral.falabella.challenge.model.dto.ProductDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ProductMapperImplTest {
 
     private ProductMapperImpl productMapper = new ProductMapperImpl();

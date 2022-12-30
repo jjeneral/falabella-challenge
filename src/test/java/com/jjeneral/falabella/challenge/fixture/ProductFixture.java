@@ -34,7 +34,6 @@ public class ProductFixture {
     }
     public static Product getProduct() {
         Product product = new Product();
-        product.setId(1L);
         BeanUtils.copyProperties(getProductDto(), product);
 
         return product;
