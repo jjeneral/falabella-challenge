@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ProductDto {
@@ -36,5 +37,6 @@ public class ProductDto {
     @NotNull(message = "principalImage must not be null" )
     @URL(message = "principalImage is not an url" )
     private String principalImage;
+    private List<@URL(message = "every element in otherImages must be an url" ) String> otherImages;
 
 }

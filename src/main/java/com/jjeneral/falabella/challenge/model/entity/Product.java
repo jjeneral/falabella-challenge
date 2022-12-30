@@ -1,12 +1,16 @@
 package com.jjeneral.falabella.challenge.model.entity;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -24,6 +28,11 @@ public class Product {
     private BigDecimal price;
     @Column(name = "principal_image")
     private String principalImage;
+
+    @ElementCollection
+    @CollectionTable(name = "images", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "other_images")
+    private List<String> otherImages;
 
     public Product() {
     }
@@ -84,6 +93,14 @@ public class Product {
         this.principalImage = principalImage;
     }
 
+    public List<String> getOtherImages() {
+        return otherImages;
+    }
+
+    public void setOtherImages(List<String> otherImages) {
+        this.otherImages = otherImages;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -94,6 +111,7 @@ public class Product {
                 ", size='" + size + '\'' +
                 ", price=" + price +
                 ", principalImage='" + principalImage + '\'' +
+                ", otherImages=" + otherImages +
                 '}';
     }
 }
