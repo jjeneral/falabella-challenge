@@ -56,3 +56,6 @@ Spring Data JPA because is widely used.
 ## Exceptions
 To centralize handle errors I used Spring's ***Controller Advice***.
 Custom exceptions were made to manage duplicated data and for not found records.
+
+## Swagger
+[Local Api documentation](http://localhost:8080/swagger-ui/index.html#/product-controller "Api documentation")
