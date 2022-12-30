@@ -57,5 +57,6 @@ Spring Data JPA because is widely used.
 To centralize handle errors I used Spring's ***Controller Advice***.
 Custom exceptions were made to manage duplicated data and for not found records.
 
-## Swagger
+## SpringDoc OpenAPI UI
+For api documentation I started with swagger but because a documentationPluginsBootstrapper error I decided to move to SpringDoc OpenAPI UI <br>  
 [Local Api documentation](http://localhost:8080/swagger-ui/index.html#/product-controller "Api documentation")
