@@ -16,13 +16,13 @@ public class ProductDto {
     @NotNull(message = "SKU must not be null" )
     private String sku;
     @NotNull(message = "name must not be null" )
-    @Size(min = 3,  message = "Minimum name length must be 3")
-    @Size(max = 50, message = "Maximum name length must be 50")
+    @Size(min = 3,  message = "minimum name length must be 3")
+    @Size(max = 50, message = "maximum name length must be 50")
     private String name;
     @NotNull(message = "brand must not be null" )
     @NotBlank(message = "brand must not be empty" )
-    @Size(min = 3,  message = "Minimum brand length must 3" )
-    @Size(max = 50, message = "Maximum brand length must be 50")
+    @Size(min = 3,  message = "minimum brand length must 3" )
+    @Size(max = 50, message = "maximum brand length must be 50")
     private String brand;
     @NotBlank(message = "size must not be empty" )
     private String size;
